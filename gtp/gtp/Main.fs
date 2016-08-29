@@ -35,10 +35,19 @@ client.Quit()
 
 open System
 open System.Windows.Forms
+
+open Emgu.CV
+open Emgu.CV.UI
+open Emgu.CV.Structure
  
 [<EntryPoint>]
 [<STAThread>]
 let main argv = 
+    let capture = new Capture()
+    let img = capture.QueryFrame()
+    let viewer = new ImageViewer(img)
+    viewer.ShowDialog()
+    Application.Idle.Add(fun _ -> viewer.Image <- capture.QueryFrame())
     //Application.EnableVisualStyles()
     //Application.SetCompatibleTextRenderingDefault false
     use form = new Form()
